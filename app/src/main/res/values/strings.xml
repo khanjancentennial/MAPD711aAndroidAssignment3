@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Bhargav_Khanjan_Assignment3</string>
+    <string name="standardView">Standard View</string>
+
+    <string-array name="map_view_types">
+        <item>Normal</item>
+        <item>Satellite</item>
+        <item>Hybrid</item>
+    </string-array>
+</resources>
