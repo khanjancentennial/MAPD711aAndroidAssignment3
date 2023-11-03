@@ -2,7 +2,7 @@
 // Assignment 3
 // File: MainActivity.kt
 // Description: This Android app simplifies the search for pizza restaurants. Users can choose from a list of cities, including Toronto, Scarborough, Mississauga, Oakville, and North York, and a few personal favorites from different regions. The app then provides location and address details for pizza restaurants in the selected city, making it easy to find and enjoy delicious pizza wherever you are.
-
+// Bhargav - design the UI and send selected city to next page using shared preference
 package com.example.bhargav_khanjan_assignment3
 
 import android.content.Context

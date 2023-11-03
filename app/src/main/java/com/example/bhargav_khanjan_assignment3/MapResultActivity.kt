@@ -3,6 +3,8 @@
 // File: CityDetailsActivity.kt
 // Description: This activity is part of an Android app designed to simplify the search for pizza restaurants. Users can choose from a list of cities, including Toronto, Scarborough, Mississauga, Oakville, and North York, and a few personal favorites from different regions. This activity displays the details of the selected city and uses Google Maps to show markers for pizza restaurants in that city. It makes it easy for users to find and enjoy delicious pizza wherever they are.
 
+// Bhargav - set map and select different map view using spinner
+// Khanjan - set the co-ordinates of the selected city, add marker in that co-ordinates and display info window with details
 
 package com.example.bhargav_khanjan_assignment3
 
@@ -56,6 +58,7 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         mapViewSpinner.adapter = adapter
 
+        // select options from spinner
         mapViewSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
@@ -83,6 +86,7 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
 
         if (cityLatLng != null) {
 
+            // zoom to the selected city
             val zoomLevel = 12.5f
 
             // Create a CameraPosition and set the target (city's LatLng) and zoom level
@@ -95,6 +99,7 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
+        // show details in the info window after clicking on marker
         mMap.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
             override fun getInfoWindow(marker: Marker): View? {
                 return null // Use the default window frame
@@ -102,6 +107,8 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
 
             @SuppressLint("MissingInflatedId")
             override fun getInfoContents(marker: Marker): View? {
+
+                // bind UI
                 val infoView = layoutInflater.inflate(R.layout.marker_info_window, null)
                 val title = infoView.findViewById<TextView>(R.id.titleTextView)
                 val snippet = infoView.findViewById<TextView>(R.id.snippetTextView)
@@ -118,6 +125,8 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
                 return infoView
             }
         })
+
+        // show 5 pizza stores based on selected city
         when (cityName) {
             "Toronto" -> {
                 // Add markers for pizza restaurants in Toronto
@@ -126,7 +135,6 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
                 addPizzaMarker(LatLng(43.64992923466573, -79.37860749764047), "Pizzaiolo","104 Yonge St, Toronto, ON M5C 2Y6\nOpen: Mon-Sat 11 AM - 10 PM", R.drawable.pizzaiolo_toronto)
                 addPizzaMarker(LatLng(43.65091734477355, -79.37849415558088), "Mamma's Pizza","127 Yonge St, Toronto, ON M5C 1W4\nOpen: Mon-Sat 11 AM - 10 PM", R.drawable.mammaspizza_toronto)
                 addPizzaMarker(LatLng(43.65231832957128, -79.37491107001834), "Domino's Pizza","67 Richmond St E, Toronto, ON M5C 1N9\nOpen: Mon-Sat 11 AM - 01 AM", R.drawable.domino_toronto)
-                // Add more markers as needed
             }
             "Scarborough" -> {
                 // Add markers for pizza restaurants in Scarborough
@@ -135,28 +143,25 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
                 addPizzaMarker(LatLng(43.76668329243716, -79.28237851145823), "Pizza On Fire","880 Ellesmere Rd Unit 10, Scarborough, ON M1P 2L8\nOpen: Mon-Sat 11 AM - 11 PM", R.drawable.pizzafire_scarborough)
                 addPizzaMarker(LatLng(43.785628211220626, -79.27936102146033), "Pizza Nova","4198 Sheppard Ave E, Scarborough, ON M1S 1T3\nOpen: Mon-Sat 11 AM - 12 AM", R.drawable.pizzanova_scarborough)
                 addPizzaMarker(LatLng(43.80748882470899, -79.17606109536985), "Pizza Pizza","9390 Sheppard Ave E, Scarborough, ON M1B 5R5\nOpen: Mon-Sat 11 AM - 12 AM", R.drawable.pizza_scarborough)
-                // Add more markers as needed
             }
             "Mississauga" -> {
-                // Add markers for pizza restaurants in Scarborough
+                // Add markers for pizza restaurants in Mississauga
                 addPizzaMarker(LatLng(43.6179696453121, -79.59542311780226), "Luca Pizza","3415 Dixie Rd, Mississauga, ON L4Y 4J6\nOpen: Mon-Sat 11 AM - 10 PM", R.drawable.luca_missi)
                 addPizzaMarker(LatLng(43.59217521248162, -79.62600075365361), "Pizza Pizza","1585 Mississauga Vly Blvd, Mississauga, ON L5A 3W9\nOpen: Mon-Sat 11 AM - 12 AM", R.drawable.pizza_missi)
                 addPizzaMarker(LatLng(43.598590905531914, -79.66070563006294), "3 For 2 Pizza & Wings","1585 Mississauga Vly Blvd, Mississauga, ON L5A 3W9\nOpen: Mon-Sat 11 AM - 12 AM", R.drawable.twoforthree_missi)
                 addPizzaMarker(LatLng(43.590798947159065, -79.67983588400692), "Sauce n Slice Pizza","1010 Dream Crest Rd #1, Mississauga, ON L5V 3A4\nOpen: Mon-Sat 11 AM - 11 PM", R.drawable.saucenslice_missi)
                 addPizzaMarker(LatLng(43.602765697650476, -79.62678505620732), "Gino's Pizza","1585 Mississauga Vly Blvd, Mississauga, ON L5A 3W9\nOpen: Mon-Sat 11 AM - 11 PM", R.drawable.gino_missi)
-                // Add more markers as needed
             }
             "Oakville" -> {
-                // Add markers for pizza restaurants in Scarborough
+                // Add markers for pizza restaurants in Oakville
                 addPizzaMarker(LatLng(43.44903429464671, -79.70291563948082), "Topper's Pizza - Oakville","220 North Service Rd W, Oakville, ON L6M 2T3\nOpen: Mon-Sat 11 AM - 11 PM", R.drawable.toppers_oakville)
                 addPizzaMarker(LatLng(43.44285694988649, -79.68031231965625), "Fantastico Pizza","288 Kerr St, Oakville, ON L6K 3B3\nOpen: Mon-Sat 10 AM - 10 PM", R.drawable.fantastico_oakville)
                 addPizzaMarker(LatLng(43.466404540142506, -79.74393061844337), "Pizzaville","483 Dundas St W, Oakville, ON L6M 4M2\nOpen: Mon-Sat 10 AM - 12 AM", R.drawable.pizzaville_oakville)
                 addPizzaMarker(LatLng(43.43779261644522, -79.7413436225363), "Pizza Pizza","Abbey Plaza, 1500 Upper Middle Rd W, Oakville, ON L6M 3G3\nOpen: Mon-Sat 10 AM - 02 AM", R.drawable.pizza_oakville)
                 addPizzaMarker(LatLng(43.488585972852334, -79.71703274872733), "Pizza Hut Oakville","380 Dundas St E Unit 4, Oakville, ON L6H 6Z9\nOpen: Mon-Sat 10 AM - 11 PM", R.drawable.pizzahut_oakville)
-                // Add more markers as needed
             }
             "North York" -> {
-                // Add markers for pizza restaurants in Scarborough
+                // Add markers for pizza restaurants in North York
                 addPizzaMarker(LatLng(43.79326131438187, -79.35371177062626), "Pizza Hut North York","3555 Don Mills Rd, North York, ON M2H 3N3\nOpen: Mon-Sat 11 AM - 11 PM", R.drawable.pizzahut_north)
                 addPizzaMarker(LatLng(43.776593383720346, -79.41423809965377), "Pizza Shab","3 Byng Ave, North York, ON M2N 7H4\nOpen: Mon-Sat 11 AM - 10 PM", R.drawable.pizzashab_noth)
                 addPizzaMarker(LatLng(43.764289455179984, -79.41208654024771), "Pizzaiolo","4920 Yonge St, North York, ON M2N 5N5\nOpen: Mon-Sat 11 AM - 10 PM", R.drawable.pizzaiolo_north)
@@ -164,7 +169,6 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
                 addPizzaMarker(LatLng(43.754154079283765, -79.3517218019068), "Tarino Pizza"," 861 York Mills Rd #2A, North York, ON M3B 1Y2\nOpen: Mon-Sat 11 AM - 12 AM", R.drawable.tarino_north)
                 // Add more markers as needed
             }
-            // Add more cases for other cities
             else -> {
                 // Default case, you can add a marker for the city center, for example
                 if (cityLatLng != null) {
@@ -188,9 +192,8 @@ class MapResultActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    // Add a marker for a pizza restaurant
     private fun addPizzaMarker(position: LatLng, title: String, snippet:String,imageResId: Int) {
-        // Add a marker for a pizza restaurant
-//        mMap.addMarker(MarkerOptions().position(position).title(title))
         val markerOptions = MarkerOptions()
             .position(position)
             .title(title)
